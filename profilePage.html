@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recycling Map</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <link rel="stylesheet" href="styles/style.css" />
+  </head>
+  <body class="bg-light">
+    <div class="container-fluid vh-100">
+      <div class="row g-0 h-100">
+        <div
+          class="col-lg-3 col-xl-2 d-none d-lg-flex flex-column bg-white border-end"
+        >
+          <div class="p-4 border-bottom">
+            <div class="logo fs-4 fw-semibold">
+              <i class="fas fa-recycle me-2"></i>RecycleMap
+            </div>
+          </div>
+
+          <div class="py-3 flex-grow-1 overflow-auto">
+            <button
+              class="material-item btn text-start w-100 d-flex align-items-center px-3 py-2 border-0 rounded-0 text-secondary fw-medium active"
+            >
+              <i class="fas fa-recycle me-3" style="width: 20px"></i>
+              All Materials
+            </button>
+            <button
+              class="material-item btn text-start w-100 d-flex align-items-center px-3 py-2 border-0 rounded-0 text-secondary"
+              data-material="Plastics"
+            >
+              <i class="fas fa-bottle-droplet me-3" style="width: 20px"></i>
+              Plastics
+            </button>
+            <button
+              class="material-item btn text-start w-100 d-flex align-items-center px-3 py-2 border-0 rounded-0 text-secondary"
+              data-material="Glass"
+            >
+              <i class="fas fa-wine-bottle me-3" style="width: 20px"></i>
+              Glass
+            </button>
+            <button
+              class="material-item btn text-start w-100 d-flex align-items-center px-3 py-2 border-0 rounded-0 text-secondary"
+              data-material="Paper"
+            >
+              <i class="fas fa-scroll me-3" style="width: 20px"></i>
+              Paper
+            </button>
+            <button
+              class="material-item btn text-start w-100 d-flex align-items-center px-3 py-2 border-0 rounded-0 text-secondary"
+              data-material="Electronics"
+            >
+              <i class="fas fa-tv me-3" style="width: 20px"></i>
+              Electronics
+            </button>
+            <button
+              class="material-item btn text-start w-100 d-flex align-items-center px-3 py-2 border-0 rounded-0 text-secondary"
+              data-material="Textiles"
+            >
+              <i class="fas fa-shirt me-3" style="width: 20px"></i>
+              Textiles
+            </button>
+            <button
+              class="material-item btn text-start w-100 d-flex align-items-center px-3 py-2 border-0 rounded-0 text-secondary"
+              data-material="Organics"
+            >
+              <i class="fas fa-leaf me-3" style="width: 20px"></i>
+              Organics
+            </button>
+          </div>
+
+         
+          <div class="p-3 border-top mt-auto">
+            <div class="text-secondary small mb-2">My Account</div>
+            <div class="d-flex align-items-center gap-3">
+              <div
+                class="user-avatar rounded-circle d-flex align-items-center justify-content-center text-white fw-semibold"
+                style="width: 40px; height: 40px"
+              >
+                J
+              </div>
+              <div class="flex-grow-1">
+                <div class="fw-medium text-dark">John Doe</div>
+                <a
+                  href="#"
+                  class="text-decoration-none text-secondary small d-flex align-items-center gap-1"
+                >
+                  <i class="fas fa-cog"></i>
+                  Settings
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile Sidebar (Offcanvas) -->
+        <div
+          class="offcanvas offcanvas-start"
+          tabindex="-1"
+          id="sidebarOffcanvas"
+          style="width: 280px"
+        >
+          <div class="offcanvas-header border-bottom">
+            <div class="logo fs-4 fw-semibold"> <i class="fas fa-recycle me-2"></i>RecycleMap</div>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="offcanvas"
+            ></button>
+          </div>
+          <div class="offcanvas-body p-0 d-flex flex-column">
+            <div class="py-3 flex-grow-1 overflow-auto">
+              <button
+                class="material-item btn text-start w-100 d-flex align-items-center px-3 py-2 border-0 rounded-0 text-secondary fw-medium active"
+                data-bs-dismiss="offcanvas"
+              >
+                <i class="fas fa-recycle me-3" style="width: 20px"></i>
+                All Materials
+              </button>
+              <button
+                class="material-item btn text-start w-100 d-flex align-items-center px-3 py-2 border-0 rounded-0 text-secondary"
+                data-material="Plastics"
+                data-bs-dismiss="offcanvas"
+              >
+                <i class="fas fa-bottle-droplet me-3" style="width: 20px"></i>
+                Plastics
+              </button>
+              <button
+                class="material-item btn text-start w-100 d-flex align-items-center px-3 py-2 border-0 rounded-0 text-secondary"
+                data-material="Glass"
+                data-bs-dismiss="offcanvas"
+              >
+                <i class="fas fa-wine-bottle me-3" style="width: 20px"></i>
+                Glass
+              </button>
+              <button
+                class="material-item btn text-start w-100 d-flex align-items-center px-3 py-2 border-0 rounded-0 text-secondary"
+                data-material="Paper"
+                data-bs-dismiss="offcanvas"
+              >
+                <i class="fas fa-scroll me-3" style="width: 20px"></i>
+                Paper
+              </button>
+              <button
+                class="material-item btn text-start w-100 d-flex align-items-center px-3 py-2 border-0 rounded-0 text-secondary"
+                data-material="Electronics"
+                data-bs-dismiss="offcanvas"
+              >
+                <i class="fas fa-tv me-3" style="width: 20px"></i>
+                Electronics
+              </button>
+              <button
+                class="material-item btn text-start w-100 d-flex align-items-center px-3 py-2 border-0 rounded-0 text-secondary"
+                data-material="Textiles"
+                data-bs-dismiss="offcanvas"
+              >
+                <i class="fas fa-shirt me-3" style="width: 20px"></i>
+                Textiles
+              </button>
+              <button
+                class="material-item btn text-start w-100 d-flex align-items-center px-3 py-2 border-0 rounded-0 text-secondary"
+                data-material="Organics"
+                data-bs-dismiss="offcanvas"
+              >
+                <i class="fas fa-leaf me-3" style="width: 20px"></i>
+                Organics
+              </button>
+            </div>
+
+            <div class="p-3 border-top mt-auto">
+              <div class="text-secondary small mb-2">My Account</div>
+              <div class="d-flex align-items-center gap-3">
+                <div
+                  class="user-avatar rounded-circle d-flex align-items-center justify-content-center text-white fw-semibold"
+                  style="width: 40px; height: 40px"
+                >
+                  J
+                </div>
+                <div class="flex-grow-1">
+                  <div class="fw-medium text-dark">John Doe</div>
+                  <a
+                    href="#"
+                    class="text-decoration-none text-secondary small d-flex align-items-center gap-1"
+                  >
+                    <i class="fas fa-cog"></i>
+                    Settings
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <main class="col-lg-9 col-xl-10 d-flex flex-column">
+          <div
+            class="bg-white border-bottom px-4 py-3 d-flex justify-content-end align-items-center gap-3"
+          >
+            <button
+              class="btn border d-lg-none me-auto"
+              style="width: 36px; height: 36px"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#sidebarOffcanvas"
+            >
+              <i class="fas fa-bars"></i>
+            </button>
+            <a href="./index.html"
+              class=" me-md-auto ms-xs-auto btn-link text-secondary text-decoration-none d-sm-flex align-items-center gap-2 px-3 py-2 rounded"
+            >
+              <i class="fas fa-home"></i>
+          </a>
+            <button
+              class="btn btn-link text-secondary text-decoration-none d-none d-sm-flex align-items-center gap-2 px-3 py-2 rounded"
+            >
+              <i class="fas fa-share"></i>
+              <span class="d-none d-md-inline">Share</span>
+            </button>
+            <button
+              class="btn btn-link text-secondary text-decoration-none d-none d-sm-flex align-items-center gap-2 px-3 py-2 rounded"
+            >
+              <i class="fas fa-cog"></i>
+              <span class="d-none d-md-inline">Settings</span>
+            </button>
+            <button
+              class="btn btn-link text-secondary text-decoration-none d-sm-none px-2 py-2"
+            >
+              <i class="fas fa-share"></i>
+            </button>
+            <button
+              class="btn btn-link text-secondary text-decoration-none d-sm-none px-2 py-2"
+            >
+              <i class="fas fa-cog"></i>
+            </button>
+            <div
+              class="user-profile-gradient rounded-circle d-flex align-items-center justify-content-center text-white fw-semibold"
+              style="width: 32px; height: 32px; font-size: 14px"
+            >
+              J
+            </div>
+          </div>
+
+          <div class="flex-grow-1 position-relative bg-light">
+            <div id="map" class="w-100 h-100"></div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="./scripts/rendermap.js"></script>
+  </body>
+</html>

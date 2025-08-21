@@ -1,0 +1,180 @@
+[
+  {
+    "id": 1,
+    "name": "EcoCycle Hub - Cairo Downtown",
+    "address": "Tahrir Square, Cairo, Egypt",
+    "lat": 30.0444,
+    "lng": 31.2357,
+    "materials": ["Plastics", "Glass", "Paper", "Electronics", "Textiles"],
+    "hours": {
+      "Mon-Fri": "09:00 AM - 05:00 PM",
+      "Sat": "10:00 AM - 02:00 PM",
+      "Sun": "Closed"
+    },
+    "phone": "+20 2 1234 5678",
+    "website": "https://ecocyclecairo.com"
+  },
+  {
+    "id": 2,
+    "name": "Green Waste Center - Alexandria",
+    "address": "Corniche Road, Alexandria, Egypt",
+    "lat": 31.2001,
+    "lng": 29.9187,
+    "materials": ["Organics", "Paper", "Plastics"],
+    "hours": {
+      "Mon-Fri": "08:00 AM - 06:00 PM",
+      "Sat": "09:00 AM - 03:00 PM",
+      "Sun": "Closed"
+    },
+    "phone": "+20 3 2345 6789",
+    "website": "https://greenwastealex.com"
+  },
+  {
+    "id": 3,
+    "name": "Community Recycling Point - Aswan",
+    "address": "Nile Corniche, Aswan, Egypt",
+    "lat": 24.0889,
+    "lng": 32.8998,
+    "materials": ["Plastics", "Glass", "Electronics"],
+    "hours": {
+      "Mon-Sat": "08:30 AM - 04:30 PM",
+      "Sun": "Closed"
+    },
+    "phone": "+20 97 345 6789",
+    "website": "https://aswanrecycling.org"
+  },
+  {
+    "id": 4,
+    "name": "E-Waste Dropoff - Luxor",
+    "address": "Temple Street, Luxor, Egypt",
+    "lat": 25.6872,
+    "lng": 32.6396,
+    "materials": ["Electronics"],
+    "hours": {
+      "Mon-Fri": "09:00 AM - 05:00 PM",
+      "Sat": "Closed",
+      "Sun": "Closed"
+    },
+    "phone": "+20 95 678 9012",
+    "website": "https://ewasteluxor.com"
+  },
+  {
+    "id": 5,
+    "name": "Paper & Cardboard Center - Giza",
+    "address": "Pyramids Road, Giza, Egypt",
+    "lat": 30.0131,
+    "lng": 31.2089,
+    "materials": ["Paper", "Cardboard"],
+    "hours": {
+      "Mon-Fri": "07:00 AM - 05:00 PM",
+      "Sat": "08:00 AM - 01:00 PM",
+      "Sun": "Closed"
+    },
+    "phone": "+20 2 7890 1234",
+    "website": "https://papercenter-giza.org"
+  },
+  {
+    "id": 6,
+    "name": "Bottle Return Station - Hurghada",
+    "address": "Sheraton Street, Hurghada, Egypt",
+    "lat": 27.2579,
+    "lng": 33.8116,
+    "materials": ["Glass", "Plastics", "Cans"],
+    "hours": {
+      "Mon-Sat": "09:00 AM - 06:00 PM",
+      "Sun": "09:00 AM - 12:00 PM"
+    },
+    "phone": "+20 65 345 6789",
+    "website": "https://bottlereturnhurghada.com"
+  },
+  {
+    "id": 7,
+    "name": "Organic Compost Facility - Mansoura",
+    "address": "Garden Street, Mansoura, Egypt",
+    "lat": 31.0419,
+    "lng": 31.3785,
+    "materials": ["Organics", "Yard Waste"],
+    "hours": {
+      "Mon-Fri": "07:00 AM - 04:00 PM",
+      "Sat": "07:00 AM - 12:00 PM",
+      "Sun": "Closed"
+    },
+    "phone": "+20 50 567 8910",
+    "website": "https://compostmansoura.org"
+  },
+  {
+    "id": 8,
+    "name": "City Textiles Recycling - Suez",
+    "address": "Port Road, Suez, Egypt",
+    "lat": 29.9668,
+    "lng": 32.5498,
+    "materials": ["Textiles", "Shoes", "Accessories"],
+    "hours": {
+      "Mon-Fri": "10:00 AM - 06:00 PM",
+      "Sat": "11:00 AM - 04:00 PM",
+      "Sun": "Closed"
+    },
+    "phone": "+20 62 678 9012",
+    "website": "https://sueztextiles.org"
+  },
+  {
+    "id": 9,
+    "name": "City Electronics Hub - Port Said",
+    "address": "Harbor Street, Port Said, Egypt",
+    "lat": 31.2653,
+    "lng": 32.3019,
+    "materials": ["Electronics", "Batteries"],
+    "hours": {
+      "Mon-Fri": "09:00 AM - 07:00 PM",
+      "Sat": "10:00 AM - 03:00 PM",
+      "Sun": "Closed"
+    },
+    "phone": "+20 66 234 5678",
+    "website": "https://portelectronics.com"
+  },
+  {
+    "id": 10,
+    "name": "Glassworks Recycling - Tanta",
+    "address": "Station Road, Tanta, Egypt",
+    "lat": 30.7865,
+    "lng": 31.0004,
+    "materials": ["Glass", "Plastics"],
+    "hours": {
+      "Mon-Fri": "08:00 AM - 05:00 PM",
+      "Sat": "Closed",
+      "Sun": "Closed"
+    },
+    "phone": "+20 40 345 6789",
+    "website": "https://glassworkstanta.org"
+  },
+  {
+    "id": 11,
+    "name": "Citywide Recycling Depot - Beni Suef",
+    "address": "Unity Plaza, Beni Suef, Egypt",
+    "lat": 29.0661,
+    "lng": 31.0994,
+    "materials": ["Plastics", "Paper", "Glass", "Electronics", "Textiles"],
+    "hours": {
+      "Mon-Fri": "09:00 AM - 05:00 PM",
+      "Sat": "09:00 AM - 02:00 PM",
+      "Sun": "Closed"
+    },
+    "phone": "+20 82 678 1234",
+    "website": "https://citywiderecycle-bs.com"
+  },
+  {
+    "id": 12,
+    "name": "Neighborhood Eco Point - Sharm El Sheikh",
+    "address": "Naama Bay, Sharm El Sheikh, Egypt",
+    "lat": 27.9158,
+    "lng": 34.3299,
+    "materials": ["Plastics", "Glass", "Paper", "Organics"],
+    "hours": {
+      "Mon-Fri": "08:00 AM - 04:00 PM",
+      "Sat": "Closed",
+      "Sun": "Closed"
+    },
+    "phone": "+20 69 345 6789",
+    "website": "https://sharmeco.org"
+  }
+]

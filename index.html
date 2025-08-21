@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RecycleMap - Your Guide to Responsible Recycling</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+    <style>
+      :root {
+        --primary-green: #28a745;
+        --light-green: #e8f5e9;
+        --bg-light-green: #f0f8f0;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+      }
+
+      /* Hero Section */
+      .hero-section {
+        background: linear-gradient(
+          135deg,
+          var(--light-green) 0%,
+          #f8f9fa 100%
+        );
+        position: relative;
+        overflow: hidden;
+      }
+
+      .recycling-card {
+        border: none;
+        border-radius: 15px;
+        transition: all 0.3s ease;
+        height: 100%;
+      }
+
+      .recycling-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      .card-image {
+        background-size: cover;
+        background-position: center;
+        border-radius: 15px 15px 0 0;
+      }
+
+      .card-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 15px 15px 0 0;
+      }
+
+      .material-badge {
+        background: var(--light-green);
+        color: var(--primary-green);
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        margin: 0.2rem;
+        display: inline-block;
+      }
+
+      .btn-custom-green {
+        background: var(--primary-green);
+        border: none;
+        color: white;
+        padding: 0.75rem 2rem;
+        border-radius: 25px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+
+      .btn-custom-green:hover {
+        background: #218838;
+        transform: translateY(-2px);
+        color: white;
+      }
+
+      .footer-section {
+        background: var(--bg-light-green);
+        padding: 3rem 0;
+      }
+      
+      .user-profile-gradient {
+        background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+      }
+      
+      /* Map styling */
+      #map {
+        height: 500px;
+        border-radius: 15px;
+        z-index: 1;
+      }
+      
+      .custom-popup .leaflet-popup-content-wrapper {
+        border-radius: 12px;
+        padding: 0;
+      }
+      
+      .custom-popup .leaflet-popup-content {
+        margin: 0;
+        width: 100% !important;
+      }
+      
+      .hours-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.25rem;
+      }
+      
+      .directions-btn {
+        border-radius: 25px;
+      }
+      
+      .material-item.active {
+        background:linear-gradient(to left bottom,white,rgb(218, 218, 218))!important;
+        color: white !important;
+      }
+    </style>
+  </head>
+  <body>
+    <nav
+      class="navbar navbar-expand-lg navbar-light bg-white py-3 sticky-top shadow-sm"
+    >
+      <div class="container">
+        <a class="navbar-brand fw-bold text-success fs-3" href="#">
+          <i class="fas fa-recycle me-2"></i>RecycleMap
+        </a>
+
+        <button
+          class="navbar-toggler border-0"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav mx-auto">
+            <li class="nav-item">
+              <a class="nav-link fw-semibold" href="#home">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#map-section">Map</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#Discover">Discover</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Centers</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#contact">Contact</a>
+            </li>
+          </ul>
+
+          <div class="d-flex align-items-center ms-auto">
+            <div class="position-relative me-3 d-none d-md-block">
+              <input
+                type="text"
+                class="form-control pe-5"
+                placeholder="Find recycling centers..."
+                style="border-radius: 25px; width: 250px"
+              />
+              <i
+                class="fas fa-search position-absolute top-50 end-0 translate-middle-y me-3 text-muted"
+              ></i>
+            </div>
+            <div>
+              <a
+                href="./profilePage.html"
+                class="text-white text-decoration-none user-profile-gradient rounded-circle d-flex align-items-center justify-content-center text-white fw-semibold"
+                style="width: 32px; height: 32px; font-size: 14px"
+                >J</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <section class="hero-section py-5 py-md-0 mt-2" id="home">
+      <div class="container">
+        <div class="row align-items-center min-vh-50">
+          <div class="col-lg-6 col-md-12 mb-4 mb-lg-0">
+            <h1 class="display-6 display-md-4 fw-bold text-dark mb-4">
+              Your Guide to<br />
+              <span class="text-success">Responsible Recycling</span>
+            </h1>
+            <p class="lead text-muted mb-4 fs-6 fs-md-5">
+              Easily locate recycling points, understand material guidelines,
+              and contribute to a greener planet with RecycleMap.
+            </p>
+            <a href="#Discover" class="btn btn-custom-green">
+              <i class="fas fa-map-marker-alt me-2"></i>Find Recycling Points
+            </a>
+          </div>
+          <div class="col-lg-6 col-md-12 text-center">
+            <img
+              src="./src/Selection (2).png"
+              alt="World Map"
+              class="world-map img-fluid"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-4 py-md-5" id="map-section">
+      <div class="container">
+        <div class="text-center mb-4 mb-md-5">
+          <h2 class="fw-bold mb-3 fs-3 fs-md-2">
+            Find Recycling Points Near You
+          </h2>
+          <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8 col-12">
+              <div class="input-group input-group-lg">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Search by address or material type..."
+                  style="border-radius: 25px 0 0 25px"
+                />
+                <button
+                  class="btn btn-success"
+                  type="button"
+                  style="border-radius: 0 25px 25px 0"
+                >
+                  <i class="fas fa-search"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center mb-4 mb-md-5">
+          <div class="d-flex flex-wrap justify-content-center gap-2">
+            <button
+              class="btn btn-outline-success btn-sm rounded-pill px-2 px-sm-3 material-item"
+              data-material=""
+            >
+              <i class="fas fa-recycle me-1"></i>All
+            </button>
+            <button
+              class="btn btn-outline-success btn-sm rounded-pill px-2 px-sm-3 material-item"
+              data-material="Plastics"
+            >
+              <i class="fas fa-bottle-water me-1"></i
+              ><span class="d-none d-sm-inline">Plastic</span
+              ><span class="d-sm-none">P</span>
+            </button>
+            <button
+              class="btn btn-outline-primary btn-sm rounded-pill px-2 px-sm-3 material-item"
+              data-material="Glass"
+            >
+              <i class="fas fa-wine-bottle me-1"></i
+              ><span class="d-none d-sm-inline">Glass</span
+              ><span class="d-sm-none">G</span>
+            </button>
+            <button
+              class="btn btn-outline-warning btn-sm rounded-pill px-2 px-sm-3 material-item"
+              data-material="Paper"
+            >
+              <i class="fas fa-scroll me-1"></i
+              ><span class="d-none d-sm-inline">Paper</span
+              ><span class="d-sm-none">Pa</span>
+            </button>
+            <button
+              class="btn btn-outline-secondary btn-sm rounded-pill px-2 px-sm-3 material-item"
+              data-material="Metal"
+            >
+              <i class="fas fa-microchip me-1"></i
+              ><span class="d-none d-sm-inline">Metal</span
+              ><span class="d-sm-none">M</span>
+            </button>
+            <button
+              class="btn btn-outline-info btn-sm rounded-pill px-2 px-sm-3 material-item"
+              data-material="Electronics"
+            >
+              <i class="fas fa-tv me-1"></i
+              ><span class="d-none d-sm-inline">Electronics</span
+              ><span class="d-sm-none">E</span>
+            </button>
+            <button
+              class="btn btn-outline-danger btn-sm rounded-pill px-2 px-sm-3 material-item"
+              data-material="Textiles"
+            >
+              <i class="fas fa-shirt me-1"></i
+              ><span class="d-none d-sm-inline">Textiles</span
+              ><span class="d-sm-none">T</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Map -->
+        <div class="flex-grow-1 position-relative bg-light">
+            <div id="map" class="w-100"></div>
+          </div>
+      </div>
+    </section>
+
+    <!-- Popular Recycling Points -->
+    <section class="py-4 py-md-5 bg-light" id="Discover">
+      <div class="container">
+        <h2 class="text-center fw-bold mb-4 mb-md-5 fs-3 fs-md-2">
+          Popular Recycling Points
+        </h2>
+
+        <div class="row g-3 g-md-4">
+          <!-- Card 1 -->
+          <div class="col-lg-4 col-md-6 col-12">
+            <div class="card recycling-card shadow h-100">
+              <div class="card-image" style="height: 150px">
+                <img
+                  src="./src/Selection (3).png"
+                  alt="Eco-Hub Community Center"
+                  class="w-100 h-100"
+                  style="object-fit: cover; border-radius: 15px 15px 0 0"
+                />
+              </div>
+              <div class="card-body">
+                <h5 class="card-title fw-bold fs-6 fs-md-5">
+                  Eco-Hub Community Center
+                </h5>
+                <p class="text-muted small mb-3">
+                  <i class="fas fa-map-marker-alt text-success me-1"></i>123
+                  Green Street, EcoVille
+                </p>
+                <div class="mb-3">
+                  <span class="material-badge">Paper</span>
+                  <span class="material-badge">Glass</span>
+                  <span class="material-badge">Plastic</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="col-lg-4 col-md-6 col-12">
+            <div class="card recycling-card shadow h-100">
+              <div class="card-image" style="height: 150px">
+                <img
+                  src="./src/Selection (4).png"
+                  alt="Sustainable City Depot"
+                  class="w-100 h-100"
+                  style="object-fit: cover; border-radius: 15px 15px 0 0"
+                />
+              </div>
+              <div class="card-body">
+                <h5 class="card-title fw-bold fs-6 fs-md-5">
+                  Sustainable City Depot
+                </h5>
+                <p class="text-muted small mb-3">
+                  <i class="fas fa-map-marker-alt text-success me-1"></i>45
+                  River Road, Sustainburg
+                </p>
+                <div class="mb-3">
+                  <span class="material-badge">Metal</span>
+                  <span class="material-badge">Electronics</span>
+                  <span class="material-badge">Batteries</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="col-lg-4 col-md-6 col-12">
+            <div class="card recycling-card shadow h-100">
+              <div class="card-image" style="height: 150px">
+                <img
+                  src="./src/Selection (5).png"
+                  alt="Urban Recycle Point"
+                  class="w-100 h-100"
+                  style="object-fit: cover; border-radius: 15px 15px 0 0"
+                />
+              </div>
+              <div class="card-body">
+                <h5 class="card-title fw-bold fs-6 fs-md-5">
+                  Urban Recycle Point
+                </h5>
+                <p class="text-muted small mb-3">
+                  <i class="fas fa-map-marker-alt text-success me-1"></i>789
+                  Main Avenue, Metro City
+                </p>
+                <div class="mb-3">
+                  <span class="material-badge">Textiles</span>
+                  <span class="material-badge">Hazardous Waste</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="col-lg-4 col-md-6 col-12">
+            <div class="card recycling-card shadow h-100">
+              <div class="card-image" style="height: 150px">
+                <img
+                  src="./src/Selection (6).png"
+                  alt="Northside Eco-Station"
+                  class="w-100 h-100"
+                  style="object-fit: cover; border-radius: 15px 15px 0 0"
+                />
+              </div>
+              <div class="card-body">
+                <h5 class="card-title fw-bold fs-6 fs-md-5">
+                  Northside Eco-Station
+                </h5>
+                <p class="text-muted small mb-3">
+                  <i class="fas fa-map-marker-alt text-success me-1"></i>10
+                  Forest Lane, Woodland
+                </p>
+                <div class="mb-3">
+                  <span class="material-badge">Organics</span>
+                  <span class="material-badge">Garden Waste</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 5 -->
+          <div class="col-lg-4 col-md-6 col-12">
+            <div class="card recycling-card shadow h-100">
+              <div class="card-image" style="height: 150px">
+                <img
+                  src="./src/Selection (7).png"
+                  alt="Central Park Collection"
+                  class="w-100 h-100"
+                  style="object-fit: cover; border-radius: 15px 15px 0 0"
+                />
+              </div>
+              <div class="card-body">
+                <h5 class="card-title fw-bold fs-6 fs-md-5">
+                  Central Park Collection
+                </h5>
+                <p class="text-muted small mb-3">
+                  <i class="fas fa-map-marker-alt text-success me-1"></i>22 Park
+                  Boulevard, Downtown
+                </p>
+                <div class="mb-3">
+                  <span class="material-badge">Paper</span>
+                  <span class="material-badge">Glass</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 6 -->
+          <div class="col-lg-4 col-md-6 col-12">
+            <div class="card recycling-card shadow h-100">
+              <div class="card-image" style="height: 150px">
+                <img
+                  src="./src/Selection (8).png"
+                  alt="Industrial Waste Solutions"
+                  class="w-100 h-100"
+                  style="object-fit: cover; border-radius: 15px 15px 0 0"
+                />
+              </div>
+              <div class="card-body">
+                <h5 class="card-title fw-bold fs-6 fs-md-5">
+                  Industrial Waste Solutions
+                </h5>
+                <p class="text-muted small mb-3">
+                  <i class="fas fa-map-marker-alt text-success me-1"></i>88
+                  Factory Drive, Industrieville
+                </p>
+                <div class="mb-3">
+                  <span class="material-badge">Hazardous Plastics</span>
+                  <span class="material-badge">Chemicals (general)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="footer-section py-4 py-md-5">
+      <div class="container">
+        <div class="text-center">
+          <h2 class="fw-bold mb-4 fs-3 fs-md-2">
+            Start Recycling Smarter Today!
+          </h2>
+          <a href="#map-section" class="btn btn-custom-green btn-lg">
+            <i class="fas fa-arrow-right me-2"></i>Explore More Centers
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white py-4 py-md-5 border-top">
+      <div class="container">
+        <div class="row g-4">
+          <div class="col-lg-4 col-md-6 col-12">
+            <div class="d-flex align-items-center mb-3">
+              <i class="fas fa-recycle text-success fs-3 me-2"></i>
+              <h5 class="fw-bold mb-0">RecycleMap</h5>
+            </div>
+            <p class="text-muted mb-3">
+              Your guide to sustainable waste management. Find, recycle, and
+              contribute to a greener planet for future generations.
+            </p>
+            <div class="d-flex gap-3">
+              <a href="#" class="text-success"
+                ><i class="fab fa-twitter fs-5"></i
+              ></a>
+              <a href="#" class="text-success"
+                ><i class="fab fa-facebook fs-5"></i
+              ></a>
+              <a href="#" class="text-success"
+                ><i class="fab fa-instagram fs-5"></i
+              ></a>
+              <a href="#" class="text-success"
+                ><i class="fab fa-linkedin fs-5"></i
+              ></a>
+            </div>
+          </div>
+
+          <div class="col-lg-2 col-md-3 col-6">
+            <h6 class="fw-bold mb-3">Company</h6>
+            <ul class="list-unstyled">
+              <li class="mb-2">
+                <a href="#" class="text-muted text-decoration-none small"
+                  >About Us</a
+                >
+              </li>
+              <li class="mb-2">
+                <a href="#" class="text-muted text-decoration-none small"
+                  >Our Team</a
+                >
+              </li>
+              <li class="mb-2">
+                <a href="#" class="text-muted text-decoration-none small"
+                  >Press</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <div class="col-lg-2 col-md-3 col-6">
+            <h6 class="fw-bold mb-3">Support</h6>
+            <ul class="list-unstyled">
+              <li class="mb-2">
+                <a href="#" class="text-muted text-decoration-none small"
+                  >FAQ</a
+                >
+              </li>
+              <li class="mb-2">
+                <a href="#" class="text-muted text-decoration-none small"
+                  >Help Center</a
+                >
+              </li>
+              <li class="mb-2">
+                <a href="#" class="text-muted text-decoration-none small"
+                  >Contact Us</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <div class="col-lg-2 col-md-6 col-6">
+            <h6 class="fw-bold mb-3">Resources</h6>
+            <ul class="list-unstyled">
+              <li class="mb-2">
+                <a href="#" class="text-muted text-decoration-none small"
+                  >Blog</a
+                >
+              </li>
+              <li class="mb-2">
+                <a href="#" class="text-muted text-decoration-none small"
+                  >Recycling Guides</a
+                >
+              </li>
+              <li class="mb-2">
+                <a href="#" class="text-muted text-decoration-none small"
+                  >Partners</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <div class="col-lg-2 col-md-6 col-6">
+            <h6 class="fw-bold mb-3">Legal</h6>
+            <ul class="list-unstyled">
+              <li class="mb-2">
+                <a href="#" class="text-muted text-decoration-none small"
+                  >Privacy Policy</a
+                >
+              </li>
+              <li class="mb-2">
+                <a href="#" class="text-muted text-decoration-none small"
+                  >Terms of Service</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <hr class="my-4" />
+
+        <div class="row align-items-center">
+          <div class="col-md-6 col-12 text-center text-md-start mb-2 mb-md-0">
+            <p class="text-muted mb-0 small">
+              © 2024 RecycleMap. All rights reserved.
+            </p>
+          </div>
+          <div class="col-md-6 col-12 text-center text-md-end">
+            <p class="text-muted mb-0 small">
+              Made with <span class="text-primary fw-bold">Visily</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="scripts/rendermapHome.js"></script>
+  </body>
+</html>
